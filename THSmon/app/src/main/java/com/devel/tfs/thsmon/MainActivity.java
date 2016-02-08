@@ -4,6 +4,7 @@ import android.graphics.Typeface;
 import android.os.AsyncTask;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.text.Html;
 import android.view.Gravity;
 import android.view.View;
 import android.widget.Button;
@@ -15,6 +16,8 @@ import org.apache.http.client.ClientProtocolException;
 import org.apache.http.client.HttpClient;
 import org.apache.http.client.methods.HttpGet;
 import org.apache.http.impl.client.DefaultHttpClient;
+import org.sufficientlysecure.htmltextview.HtmlTextView;
+import org.w3c.dom.Text;
 import org.xmlpull.v1.XmlPullParser;
 import org.xmlpull.v1.XmlPullParserException;
 import org.xmlpull.v1.XmlPullParserFactory;
@@ -49,26 +52,28 @@ public class MainActivity extends AppCompatActivity {
 
     protected void makeTextViews() {
         LinearLayout layout = (LinearLayout)findViewById(R.id.sensorsLL);
-        TextView updateTimeTV = new TextView(this);
-        updateTimeTV.setText(updateTime);
-        updateTimeTV.setGravity(Gravity.CENTER_HORIZONTAL);
-        layout.addView(updateTimeTV);
         layout.removeAllViewsInLayout();
+        TextView updateLabel = new TextView(this);
+        updateLabel.setGravity(Gravity.CENTER_HORIZONTAL);
+        updateLabel.setText(Html.fromHtml("<h5>Данные от: " + sensors.updateTime + "</h5>"));
+        layout.addView(updateLabel);
         for (Sensors.Sensor sensor : sensors.sensorsList) {
-                LinearLayout sensorView = new LinearLayout(this);
-                sensorView.setGravity(Gravity.CENTER_HORIZONTAL);
-                sensorView.setOrientation(LinearLayout.VERTICAL);
-                TextView title = new TextView(this);
-                title.setTypeface(null, Typeface.BOLD);
-                title.setText("Датчик: " + sensor.name + " (Данные от: " + sensors.updateTime + ")");
-                sensorView.addView(title);
-                TextView tv = new TextView(this);
-                tv.setText("Температура: " + sensor.currentTemp + "\nВлажность: " + sensor.currentHumi);
-                sensorView.addView(tv);
-                layout.addView(sensorView);
-                Space space = new Space(this);
-                space.setMinimumHeight(50);
-                layout.addView(space);
+            LinearLayout sensorView = new LinearLayout(this);
+            sensorView.setGravity(Gravity.CENTER_HORIZONTAL);
+            sensorView.setOrientation(LinearLayout.VERTICAL);
+            TextView title = new TextView(this);
+            title.setText(Html.fromHtml("<b>Датчик:</b> " + sensor.name));
+            title.setGravity(Gravity.CENTER_HORIZONTAL);
+            sensorView.addView(title);
+            TextView currentData = new TextView(this);
+            currentData.setText(Html.fromHtml(sensor.currentTemp.toString() + "°C             " + sensor.currentHumi.toString() + "%"));
+            currentData.setTextSize(32);
+            currentData.setGravity(Gravity.CENTER_HORIZONTAL);
+            sensorView.addView(currentData);
+            layout.addView(sensorView);
+            Space space = new Space(this);
+            space.setMinimumHeight(50);
+            layout.addView(space);
         }
         System.out.println(layout.getChildCount());
     }
