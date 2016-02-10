@@ -1,5 +1,8 @@
 package com.devel.tfs.thsmon;
 
+import android.app.ActionBar;
+import android.app.Activity;
+import android.graphics.Color;
 import android.graphics.Typeface;
 import android.os.AsyncTask;
 import android.support.v7.app.AppCompatActivity;
@@ -7,6 +10,7 @@ import android.os.Bundle;
 import android.text.Html;
 import android.view.Gravity;
 import android.view.View;
+import android.widget.ActionMenuView;
 import android.widget.Button;
 import android.widget.LinearLayout;
 import android.widget.Space;
@@ -25,11 +29,12 @@ import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
 import java.io.StringReader;
+import java.util.EmptyStackException;
 
 public class MainActivity extends AppCompatActivity {
     Button btnRefresh;
     Sensors sensors;
-    String updateTime;
+    LinearLayout.LayoutParams params;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -53,14 +58,23 @@ public class MainActivity extends AppCompatActivity {
     protected void makeTextViews() {
         LinearLayout layout = (LinearLayout)findViewById(R.id.sensorsLL);
         layout.removeAllViewsInLayout();
-        TextView updateLabel = new TextView(this);
-        updateLabel.setGravity(Gravity.CENTER_HORIZONTAL);
-        updateLabel.setText(Html.fromHtml("<h5>Данные от: " + sensors.updateTime + "</h5>"));
-        layout.addView(updateLabel);
+        TextView updateLabel = (TextView)findViewById(R.id.lastUpdateTV);
+        updateLabel.setText(Html.fromHtml("<small>Данные от: " + sensors.updateTime + "<small>"));
+        Space spaceStart = new Space(this);
+        spaceStart.setMinimumHeight(50);
+        layout.addView(spaceStart);
         for (Sensors.Sensor sensor : sensors.sensorsList) {
             LinearLayout sensorView = new LinearLayout(this);
             sensorView.setGravity(Gravity.CENTER_HORIZONTAL);
             sensorView.setOrientation(LinearLayout.VERTICAL);
+            sensorView.setBackgroundColor(Color.parseColor("#0985ff"));
+            try {
+                params = new LinearLayout.LayoutParams(800,250);
+                params.leftMargin=150;
+                sensorView.setLayoutParams(params);
+            } catch (Exception e) {
+                System.out.println(e);
+            }
             TextView title = new TextView(this);
             title.setText(Html.fromHtml("<b>Датчик:</b> " + sensor.name));
             title.setGravity(Gravity.CENTER_HORIZONTAL);
