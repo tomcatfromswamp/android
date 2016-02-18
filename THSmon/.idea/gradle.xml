@@ -9,8 +9,8 @@
         <option name="gradleJvm" value="1.7" />
         <option name="modules">
           <set>
-            <option value="/mnt/data/Development/android/THSmon" />
-            <option value="/mnt/data/Development/android/THSmon/app" />
+            <option value="$PROJECT_DIR$" />
+            <option value="$PROJECT_DIR$/wstation" />
           </set>
         </option>
       </GradleProjectSettings>

@@ -2,8 +2,8 @@
 <project version="4">
   <component name="ProjectModuleManager">
     <modules>
-      <module fileurl="file:///mnt/data/Development/android/THSmon/THSmon.iml" filepath="/mnt/data/Development/android/THSmon/THSmon.iml" />
-      <module fileurl="file:///mnt/data/Development/android/THSmon/app/app.iml" filepath="/mnt/data/Development/android/THSmon/app/app.iml" />
+      <module fileurl="file://$PROJECT_DIR$/THSmon.iml" filepath="$PROJECT_DIR$/THSmon.iml" />
+      <module fileurl="file://$PROJECT_DIR$/wstation/wstation.iml" filepath="$PROJECT_DIR$/wstation/wstation.iml" />
     </modules>
   </component>
 </project>
